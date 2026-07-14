@@ -35,3 +35,41 @@
     - name: Display info file content
       ansible.builtin.debug:
         var: file_output.stdout
+
+    - name: Deploy HTML template
+      ansible.builtin.template:
+        src: ../templates/index.j2
+        dest: /usr/share/nginx/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+      vars:
+        project_name: "Ansible GPT"
+        owner: "Rahaman"
+
+    - name: Restart nginx after template deployment
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Create devops group
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: Create deploy user
+      ansible.builtin.user:
+        name: deploy
+        group: devops
+        shell: /bin/bash
+        create_home: yes
+        state: present
+
+    - name: Create application directory for deploy user
+      ansible.builtin.file:
+        path: /home/deploy/app
+        state: directory
+        owner: deploy
+        group: devops
+        mode: '0755'
