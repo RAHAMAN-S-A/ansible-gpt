@@ -1,0 +1,24 @@
+---
+- name: Template Module Practice
+  hosts: web
+  become: yes
+
+  vars:
+    project_name: "Ansible GPT"
+    env: "Development"
+    owner: "Rahaman"
+
+  tasks:
+
+    - name: Deploy template file
+      ansible.builtin.template:
+        src: ../templates/index.j2
+        dest: /usr/share/nginx/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

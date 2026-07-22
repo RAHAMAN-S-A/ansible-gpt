@@ -1,0 +1,33 @@
+---
+- name: User Module Practice
+  hosts: web
+  become: yes
+
+  tasks:
+
+    - name: Create devops group
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: Create deploy user
+      ansible.builtin.user:
+        name: deploy
+        group: devops
+        shell: /bin/bash
+        create_home: yes
+        state: present
+
+    - name: Create application user
+      ansible.builtin.user:
+        name: appuser
+        shell: /bin/bash
+        create_home: yes
+        state: present
+
+    - name: Create automation user
+      ansible.builtin.user:
+        name: automation
+        shell: /bin/bash
+        create_home: yes
+        state: present
