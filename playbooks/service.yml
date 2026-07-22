@@ -1,0 +1,26 @@
+---
+- name: Service Module Practice
+  hosts: web
+  become: yes
+
+  tasks:
+
+    - name: Start nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+
+    - name: Enable nginx service
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+
+    - name: Restart nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Reload nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded

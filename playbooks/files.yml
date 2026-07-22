@@ -1,0 +1,35 @@
+---
+- name: File Module Practice
+  hosts: web
+  become: yes
+
+  tasks:
+
+    - name: Create application directory
+      ansible.builtin.file:
+        path: /opt/application
+        state: directory
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+
+    - name: Create logs directory
+      ansible.builtin.file:
+        path: /opt/application/logs
+        state: directory
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+
+    - name: Create empty log file
+      ansible.builtin.file:
+        path: /opt/application/logs/app.log
+        state: touch
+        owner: ec2-user
+        group: ec2-user
+        mode: '0644'
+
+    - name: Remove old file
+      ansible.builtin.file:
+        path: /tmp/oldfile.txt
+        state: absent
